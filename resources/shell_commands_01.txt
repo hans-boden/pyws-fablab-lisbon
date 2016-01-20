@@ -1,0 +1,250 @@
+# At the prompt '>>>' any valid expression or statement can be entered
+# The Python shell shows the results of the evaluation or
+# executes the statement
+
+# The hash '#' starts a comment 
+
+# --- Simple values ---
+v 5    # number (integer)
+v 234923059834209485209680294865203463426982034   # integers may be long!
+v 3.1417   # decimal number
+v 'some text'   #   a string: text in apostrophes
+v "  more text "   #  another string:  text in quotes (space is preserved)
+
+# --- More about strings ---
+# for strings the output from evaluation is different from print() output
+v "this is John's book"    # embed an apostrophe in a quoted string
+x print("this is John's book")    # print() shows the data without additional quotes
+v 'embed "qotes" in a string'   # the other way round
+x print('embed "qotes" in a string')
+v len('abcde')   # get the length of a string
+
+# --- Escaping ---
+# some characters can or must be be 'escaped' with a backslash '\'
+# escaping allows to enter special characters into strings
+# the 'effect' of the special characters is only visible with print()
+v "escape a \" and a \'"    # escaping for the " is necessary
+x print("escape a \" and a \'")    # the print output looks slightly different
+v 'escape a \" and a \''    # escaping for the ' is necessary
+x print('escape a \" and a \'')    # different output again
+# its also possible to insert a "newline" with '\n'
+v "this text is split\ninto two lines"  #  evaluation leaves the \n untouched
+x print("this text is split\ninto two lines")  #  print() resolves the \n
+
+# --- Triple quoted strings ---
+v '''string surrounded with triple apostrophes'''   # used for what?
+v °°°can contain "this" and 'that'°°°  # quotes and apostrophes without escape
+# its also possible to span several lines
+j '''A string starts here
+j    is continued
+v and ends here.'''  # again, evaluation does not 'resolve' the newlines
+j print('''A string starts here,
+j    is continued
+x and ends here.''')  # but print() does, leading spaces are preserved
+v "a\tb"  # this is a 'tabulator'
+x print("a\tb") # the "effect" of a "tabulator" depends on the output device
+
+# --- Mathematical expressions ---
+v 2+17
+v 2+17*3     # priority rules matter
+v (2+17)*3   # parenthesis work
+v 3,5 + 2   # attention!
+# a comma (,) actually forms a tuple (sequence of values)
+v 3.5 + 2   # try again ...
+v 7/0   # not every operation is valid
+v 7/1   # for a decimal or a division, the result is a decimal
+v 1+2+3+4+5+6+7+9
+v 1+2+3+4+5+6+7+9+0.0
+v 3**4   # 3 to the power of 4
+v pow(3, 4)  # same result with a builtin function
+
+v -3   # one-sided minus
+v 7-3   # two-sided minus
+v 7-(-3)
+
+v 13/4
+v 13//4  # integer divison - ignores the rest
+v 13%4   # this gives the missing rest
+
+v abs( 7.3)  # absolut value - ignore a negative sign
+v abs(-7.3)
+v int( 7.3)   # returns a integer by ignoring the decimal part
+v int(-7.3)
+v int("4")   # convert a string
+v int("   -4  ")   # leading and trailing spaces are ok
+v int("   - 3")      
+v int("-4.2")   # and it must be an integer value
+v float(3)
+v float(3.9)
+v float(" -17.33")   # convert a string
+
+# --- floating point math has its limits ---
+v 10/3   # precision is finite
+v round(1.3)  # round down
+v round(1.6)  # round up
+v round(1.5)  # up or down?
+v round(2.5)  # up or down?
+v 0.1 + 0.2
+v 0.1 + 0.2 == 0.3  # should be True
+# for more details read the Python Tuorial: "Floating Point Arithmetic"
+
+# --- Boolean expressions ---
+v True    # a special name, considered as logical '1'
+v False   # considered as logical '0'
+v 2 == 3  # comparison operator: equal
+v 2 != 3  # not equal
+v 2 < 3
+v True and True    # 'and' is considered as logical multiplication
+v True and False
+v True or False    # 'or' is considered as logical addition
+v not True         # 'not' is a logical minus
+v not False
+v not True or True   # attention
+v not (True or True)  # 'not' has precedence over 'and' has preedence over 'or'
+v 3 > 2 and 3 < 4
+v 2 < 3 < 4
+v bool()   #  convert 'something' into a boolean value
+v bool(False)
+v bool(0)    
+v bool(13)    # anything != 0 should be True
+v bool('')
+v bool(' ')   # anything not "empty" should be True
+v bool(None)  # None represents 'nothing', 'nul'
+
+
+# --- Variables and Assignments ---
+x a = 1
+x a1 = 3
+x A = 5     # case (upper/lower) matters, A != a
+x A_3_ = 7
+v a
+v a1, A, A_3_   # comma separated values form a 'tuple'
+x atuple = a, a1, A_3_   # assign multiple values to a tuple
+v atuple
+x print("tuple:", atuple)
+x print("single values:", a, a1, A_3_)
+x b = c = a    # multiple assignments
+v a, b, c
+x del b, A   # del removes a name from the name table
+v a, b, c
+x under_scored = 'hello'  # name convention for variables and functions
+x camelCase = 'world'     # name convention for classes (will come later)
+x x, y, z = atuple   # unpack a tuple 
+x print(x, y, z)
+v x == a
+v y == a1, z == A_3_
+
+# special assignment
+v a
+x a += 9   # same as a = a+9
+x a -= 4
+x a *= 4
+v a
+
+# --- Lists and Tuples ---
+x ftup = 'apple', 'pear', 'cherry', 'plum'
+v ftup
+x gtup = ('apple', 'pear', 'cherry', 'plum')
+v gtup
+v ftup == gtup
+x hlist = []    # empty list
+x hlist = [3.14159, '', 2+7+5, None, 'nobody', 0, False]
+v hlist
+v len(hlist)
+v ftup[0]
+v hlist[4]
+x hlist[3] = 777
+v hlist
+x gtup[2] = 'banana'
+v gtup
+v tuple(hlist)   # copy and convert
+v list(gtup)     # copy and convert
+
+# --- Lists & Tuples: Indexing and Slicing ---
+x alist = ['Tom', 'Jude', 'Mary', 'Jack', 'Rose', 'Rob']
+v alist[0], alist[5]
+v alist[6]
+v alist[-1]    # last element
+v alist[-3]    # third from the end
+v alist[0:2]   # part (slice) of the list, including 0 but not 2
+v alist[1:4]
+v alist[3:]    # 3 and all following
+v alist[3:9]   # if the list is not long enough, just return what is there
+v alist[:3]    # all up to, but not including 3
+v alist[-2:]   # the last 2 elements
+
+# Lists can be modified
+v alist
+x alist[2] = 'Joan' # replace one element
+x del alist[-2:]    # delete the last 2 elements
+x alist.append('Peter')   # append a single value
+v alist
+
+x more_names = ['Mark', 'Dora', 'Liv']
+x alist.extend(more_names)   # append a list
+v alist
+x alist[3:3] = ['Bert']    # insert a list
+x alist.insert(5, 'Susan') # insert a single value
+v alist
+v sorted(alist)   # this returns a copy
+v alist
+x alist.sort()    # this modifies the original list
+v alist
+
+# --- More on Strings ---
+# Strings are like a tuple of single characters
+x xstr = "Hello World"
+v len(xstr)
+v xstr[0]
+v xstr[-1]
+v xstr[-3:]
+v xstr[3:8]
+# there are many methods, that work with strings.
+v xstr.lower()    # the original string is never modified
+v xstr.upper()    # string methods always return copies
+v xstr.center(20, '-')
+v xstr.endswith('World')   # return a boolean value
+v xstr.endswith('world')   # return a boolean value, case matters
+v xstr.find('l')     # search a string inside
+v xstr.find('l', 2)  # search from a starting position
+v xstr.find('l', 3)  # search from a starting position
+v xstr.find('l', 5)  # search from a starting position
+
+x noisy = '   some text \n'
+v noisy.strip()    # strip() removes 'whitespace'
+v noisy.rstrip()
+v noisy.lstrip()
+v noisy.split()    # split() ignores whitespace
+v noisy.split('e')   # split returns a list
+v noisy.split(' ')
+v noisy.split('$')   # split always returns a list with at least one element
+
+
+# --- Printing and Formatting Text ---
+
+x integ = -234
+x hestr = 'Hello'
+x wostr = 'World'
+x listr = 'Lisbon'
+
+x print(integ)
+x print(hestr, listr)
+# put more than one instruction on one line, possible but not recommended
+x print(hestr); print(wostr)    # print two strings side by side?
+x print(hestr, end=''); print(wostr)   # if 'end' is not specified, it defaults to '\n'
+x print(hestr, end=' '); print(wostr)
+
+v 'Greetings: {} {}, {} {}'.format(hestr, listr, hestr, wostr)
+v 'Greetings: {0} {1}, {0} {2}'.format(hestr, listr, wostr)
+v 'Greetings: {0:>10} {1:<10}, {0} {2}'.format(hestr, listr, wostr)
+v 'Greetings: {0:>4} {1:<4}, {0} {2}'.format(hestr, listr, wostr)  # no truncation occurs
+
+v 'Say {}, {} times'.format(hestr, 7)   # format numbers
+v 'Say {}, {:+4d} times'.format(hestr, 7)   # show integer with sign
+v 'Say {}, {:-04d} times'.format(hestr, 7)   # show integer only with negative sign
+v 'Say {}, {:-02d} times'.format(hestr, integ)   # again, no truncation
+v '100 / 6 == {}'.format(100/6)          # default formatting for float
+v '100 / 6 == {:11.5f}'.format(100/6)    # first number is the total length
+v '100 / 8 == {:07.3f}'.format(100/8)    # second number is the decimal digits
+
+

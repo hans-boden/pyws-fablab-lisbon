@@ -1,0 +1,413 @@
+C:\Python34\python.exe C:/_h_/project/python_workshop/eval_loop.py
+
+          ###   Python Shell Simulator   ###
+          Execute statements from 'shell_commands_01.txt' as 'A'
+
+     # At the prompt '>>>' any valid expression or statement can be entered
+     # The Python shell shows the results of the evaluation or
+     # executes the statement
+
+     # The hash '#' starts a comment
+
+     # --- Simple values ---
+A001 >>> 5    # number (integer)
+     5
+A002 >>> 234923059834209485209680294865203463426982034   # integers may be long!
+     234923059834209485209680294865203463426982034
+A003 >>> 3.1417   # decimal number
+     3.1417
+A004 >>> 'some text'   #   a string: text in apostrophes
+     'some text'
+A005 >>> "  more text "   #  another string:  text in quotes (space is preserved)
+     '  more text '
+
+     # --- More about strings ---
+     # for strings the output from evaluation is different from print() output
+A006 >>> "this is John's book"    # embed an apostrophe in a quoted string
+     "this is John's book"
+A007 >>> print("this is John's book")    # print() shows the data without additional quotes
+this is John's book
+A008 >>> 'embed "qotes" in a string'   # the other way round
+     'embed "qotes" in a string'
+A009 >>> print('embed "qotes" in a string')
+embed "qotes" in a string
+A010 >>> len('abcde')   # get the length of a string
+     5
+
+     # --- Escaping ---
+     # some characters can or must be be 'escaped' with a backslash '\'
+     # escaping allows to enter special characters into strings
+     # the 'effect' of the special characters is only visible with print()
+A011 >>> "escape a \" and a \'"    # escaping for the " is necessary
+     'escape a " and a \''
+A012 >>> print("escape a \" and a \'")    # the print output looks slightly different
+escape a " and a '
+A013 >>> 'escape a \" and a \''    # escaping for the ' is necessary
+     'escape a " and a \''
+A014 >>> print('escape a \" and a \'')    # different output again
+escape a " and a '
+     # its also possible to insert a "newline" with '\n'
+A015 >>> "this text is split\ninto two lines"  #  evaluation leaves the \n untouched
+     'this text is split\ninto two lines'
+A016 >>> print("this text is split\ninto two lines")  #  print() resolves the \n
+this text is split
+into two lines
+
+     # --- Triple quoted strings ---
+A017 >>> '''string surrounded with triple apostrophes'''   # used for what?
+     'string surrounded with triple apostrophes'
+A018 >>> """can contain "this" and 'that'"""  # quotes and apostrophes without escape
+     'can contain "this" and \'that\''
+     # its also possible to span several lines
+A019 >>> '''A string starts here
+     ...    is continued
+     ... and ends here.'''  # again, evaluation does not 'resolve' the newlines
+     'A string starts here\n   is continued\nand ends here.'
+A020 >>> print('''A string starts here,
+     ...    is continued
+    ... and ends here.''')  # but print() does, leading spaces are preserved
+A string starts here,
+   is continued
+and ends here.
+A021 >>> "a\tb"  # this is a 'tabulator'
+     'a\tb'
+A022 >>> print("a\tb") # the "effect" of a "tabulator" depends on the output device
+a	b
+
+     # --- Mathematical expressions ---
+A023 >>> 2+17
+     19
+A024 >>> 2+17*3     # priority rules matter
+     53
+A025 >>> (2+17)*3   # parenthesis work
+     57
+A026 >>> 3,5 + 2   # attention!
+     (3, 7)
+     # a comma (,) actually forms a tuple (sequence of values)
+A027 >>> 3.5 + 2   # try again ...
+     5.5
+A028 >>> 7/0   # not every operation is valid
+     ZeroDivisionError('division by zero',)
+A029 >>> 7/1   # for a decimal or a division, the result is a decimal
+     7.0
+A030 >>> 1+2+3+4+5+6+7+9
+     37
+A031 >>> 1+2+3+4+5+6+7+9+0.0
+     37.0
+A032 >>> 3**4   # 3 to the power of 4
+     81
+A033 >>> pow(3, 4)  # same result with a builtin function
+     81
+
+A034 >>> -3   # one-sided minus
+     -3
+A035 >>> 7-3   # two-sided minus
+     4
+A036 >>> 7-(-3)
+     10
+
+A037 >>> 13/4
+     3.25
+A038 >>> 13//4  # integer divison - ignores the rest
+     3
+A039 >>> 13%4   # this gives the missing rest
+     1
+
+A040 >>> abs( 7.3)  # absolut value - ignore a negative sign
+     7.3
+A041 >>> abs(-7.3)
+     7.3
+A042 >>> int( 7.3)   # returns a integer by ignoring the decimal part
+     7
+A043 >>> int(-7.3)
+     -7
+A044 >>> int("4")   # convert a string
+     4
+A045 >>> int("   -4  ")   # leading and trailing spaces are ok
+     -4
+A046 >>> int("   - 3")
+     ValueError("invalid literal for int() with base 10: '   - 3'",)
+A047 >>> int("-4.2")   # and it must be an integer value
+     ValueError("invalid literal for int() with base 10: '-4.2'",)
+A048 >>> float(3)
+     3.0
+A049 >>> float(3.9)
+     3.9
+A050 >>> float(" -17.33")   # convert a string
+     -17.33
+
+     # --- floating point math has its limits ---
+A051 >>> 10/3   # precision is finite
+     3.3333333333333335
+A052 >>> round(1.3)  # round down
+     1
+A053 >>> round(1.6)  # round up
+     2
+A054 >>> round(1.5)  # up or down?
+     2
+A055 >>> round(2.5)  # up or down?
+     2
+A056 >>> 0.1 + 0.2
+     0.30000000000000004
+A057 >>> 0.1 + 0.2 == 0.3  # should be True
+     False
+     # for more details read the Python Tuorial: "Floating Point Arithmetic"
+
+     # --- Boolean expressions ---
+A058 >>> True    # a special name, considered as logical '1'
+     True
+A059 >>> False   # considered as logical '0'
+     False
+A060 >>> 2 == 3  # comparison operator: equal
+     False
+A061 >>> 2 != 3  # not equal
+     True
+A062 >>> 2 < 3
+     True
+A063 >>> True and True    # 'and' is considered as logical multiplication
+     True
+A064 >>> True and False
+     False
+A065 >>> True or False    # 'or' is considered as logical addition
+     True
+A066 >>> not True         # 'not' is a logical minus
+     False
+A067 >>> not False
+     True
+A068 >>> not True or True   # attention
+     True
+A069 >>> not (True or True)  # 'not' has precedence over 'and' has preedence over 'or'
+     False
+A070 >>> 3 > 2 and 3 < 4
+     True
+A071 >>> 2 < 3 < 4
+     True
+A072 >>> bool()   #  convert 'something' into a boolean value
+     False
+A073 >>> bool(False)
+     False
+A074 >>> bool(0)
+     False
+A075 >>> bool(13)    # anything != 0 should be True
+     True
+A076 >>> bool('')
+     False
+A077 >>> bool(' ')   # anything not "empty" should be True
+     True
+A078 >>> bool(None)  # None represents 'nothing', 'nul'
+     False
+
+
+     # --- Variables and Assignments ---
+A079 >>> a = 1
+A080 >>> a1 = 3
+A081 >>> A = 5     # case (upper/lower) matters, A != a
+A082 >>> A_3_ = 7
+A083 >>> a
+     1
+A084 >>> a1, A, A_3_   # comma separated values form a 'tuple'
+     (3, 5, 7)
+A085 >>> atuple = a, a1, A_3_   # assign multiple values to a tuple
+A086 >>> atuple
+     (1, 3, 7)
+A087 >>> print("tuple:", atuple)
+tuple: (1, 3, 7)
+A088 >>> print("single values:", a, a1, A_3_)
+single values: 1 3 7
+A089 >>> b = c = a    # multiple assignments
+A090 >>> a, b, c
+     (1, 1, 1)
+A091 >>> del b, A   # del removes a name from the name table
+A092 >>> a, b, c
+     NameError("name 'b' is not defined",)
+A093 >>> under_scored = 'hello'  # name convention for variables and functions
+A094 >>> camelCase = 'world'     # name convention for classes (will come later)
+A095 >>> x, y, z = atuple   # unpack a tuple
+A096 >>> print(x, y, z)
+1 3 7
+A097 >>> x == a
+     True
+A098 >>> y == a1, z == A_3_
+     (True, True)
+
+     # special assignment
+A099 >>> a
+     1
+A100 >>> a += 9   # same as a = a+9
+A101 >>> a -= 4
+A102 >>> a *= 4
+A103 >>> a
+     24
+
+     # --- Lists and Tuples ---
+A104 >>> ftup = 'apple', 'pear', 'cherry', 'plum'
+A105 >>> ftup
+     ('apple', 'pear', 'cherry', 'plum')
+A106 >>> gtup = ('apple', 'pear', 'cherry', 'plum')
+A107 >>> gtup
+     ('apple', 'pear', 'cherry', 'plum')
+A108 >>> ftup == gtup
+     True
+A109 >>> hlist = []    # empty list
+A110 >>> hlist = [3.14159, '', 2+7+5, None, 'nobody', 0, False]
+A111 >>> hlist
+     [3.14159, '', 14, None, 'nobody', 0, False]
+A112 >>> len(hlist)
+     7
+A113 >>> ftup[0]
+     'apple'
+A114 >>> hlist[4]
+     'nobody'
+A115 >>> hlist[3] = 777
+A116 >>> hlist
+     [3.14159, '', 14, 777, 'nobody', 0, False]
+A117 >>> gtup[2] = 'banana'
+     TypeError("'tuple' object does not support item assignment",)
+A118 >>> gtup
+     ('apple', 'pear', 'cherry', 'plum')
+A119 >>> tuple(hlist)   # copy and convert
+     (3.14159, '', 14, 777, 'nobody', 0, False)
+A120 >>> list(gtup)     # copy and convert
+     ['apple', 'pear', 'cherry', 'plum']
+
+     # --- Lists & Tuples: Indexing and Slicing ---
+A121 >>> alist = ['Tom', 'Jude', 'Mary', 'Jack', 'Rose', 'Rob']
+A122 >>> alist[0], alist[5]
+     ('Tom', 'Rob')
+A123 >>> alist[6]
+     IndexError('list index out of range',)
+A124 >>> alist[-1]    # last element
+     'Rob'
+A125 >>> alist[-3]    # third from the end
+     'Jack'
+A126 >>> alist[0:2]   # part (slice) of the list, including 0 but not 2
+     ['Tom', 'Jude']
+A127 >>> alist[1:4]
+     ['Jude', 'Mary', 'Jack']
+A128 >>> alist[3:]    # 3 and all following
+     ['Jack', 'Rose', 'Rob']
+A129 >>> alist[3:9]   # if the list is not long enough, just return what is there
+     ['Jack', 'Rose', 'Rob']
+A130 >>> alist[:3]    # all up to, but not including 3
+     ['Tom', 'Jude', 'Mary']
+A131 >>> alist[-2:]   # the last 2 elements
+     ['Rose', 'Rob']
+
+     # Lists can be modified
+A132 >>> alist
+     ['Tom', 'Jude', 'Mary', 'Jack', 'Rose', 'Rob']
+A133 >>> alist[2] = 'Joan' # replace one element
+A134 >>> del alist[-2:]    # delete the last 2 elements
+A135 >>> alist.append('Peter')   # append a single value
+A136 >>> alist
+     ['Tom', 'Jude', 'Joan', 'Jack', 'Peter']
+
+A137 >>> more_names = ['Mark', 'Dora', 'Liv']
+A138 >>> alist.extend(more_names)   # append a list
+A139 >>> alist
+     ['Tom', 'Jude', 'Joan', 'Jack', 'Peter', 'Mark', 'Dora', 'Liv']
+A140 >>> alist[3:3] = ['Bert']    # insert a list
+A141 >>> alist.insert(5, 'Susan') # insert a single value
+A142 >>> alist
+     ['Tom', 'Jude', 'Joan', 'Bert', 'Jack', 'Susan', 'Peter', 'Mark', 'Dora', 'Liv']
+A143 >>> sorted(alist)   # this returns a copy
+     ['Bert', 'Dora', 'Jack', 'Joan', 'Jude', 'Liv', 'Mark', 'Peter', 'Susan', 'Tom']
+A144 >>> alist
+     ['Tom', 'Jude', 'Joan', 'Bert', 'Jack', 'Susan', 'Peter', 'Mark', 'Dora', 'Liv']
+A145 >>> alist.sort()    # this modifies the original list
+A146 >>> alist
+     ['Bert', 'Dora', 'Jack', 'Joan', 'Jude', 'Liv', 'Mark', 'Peter', 'Susan', 'Tom']
+
+     # --- More on Strings ---
+     # Strings are like a tuple of single characters
+A147 >>> xstr = "Hello World"
+A148 >>> len(xstr)
+     11
+A149 >>> xstr[0]
+     'H'
+A150 >>> xstr[-1]
+     'd'
+A151 >>> xstr[-3:]
+     'rld'
+A152 >>> xstr[3:8]
+     'lo Wo'
+     # there are many methods, that work with strings.
+A153 >>> xstr.lower()    # the original string is never modified
+     'hello world'
+A154 >>> xstr.upper()    # string methods always return copies
+     'HELLO WORLD'
+A155 >>> xstr.center(20, '-')
+     '----Hello World-----'
+A156 >>> xstr.endswith('World')   # return a boolean value
+     True
+A157 >>> xstr.endswith('world')   # return a boolean value, case matters
+     False
+A158 >>> xstr.find('l')     # search a string inside
+     2
+A159 >>> xstr.find('l', 2)  # search from a starting position
+     2
+A160 >>> xstr.find('l', 3)  # search from a starting position
+     3
+A161 >>> xstr.find('l', 5)  # search from a starting position
+     9
+
+A162 >>> noisy = '   some text \n'
+A163 >>> noisy.strip()    # strip() removes 'whitespace'
+     'some text'
+A164 >>> noisy.rstrip()
+     '   some text'
+A165 >>> noisy.lstrip()
+     'some text \n'
+A166 >>> noisy.split()    # split() ignores whitespace
+     ['some', 'text']
+A167 >>> noisy.split('e')   # split returns a list
+     ['   som', ' t', 'xt \n']
+A168 >>> noisy.split(' ')
+     ['', '', '', 'some', 'text', '\n']
+A169 >>> noisy.split('$')   # split always returns a list with at least one element
+     ['   some text \n']
+
+
+     # --- Printing and Formatting Text ---
+
+A170 >>> integ = -234
+A171 >>> hestr = 'Hello'
+A172 >>> wostr = 'World'
+A173 >>> listr = 'Lisbon'
+
+A174 >>> print(integ)
+-234
+A175 >>> print(hestr, listr)
+Hello Lisbon
+     # put more than one instruction on one line, possible but not recommended
+A176 >>> print(hestr); print(wostr)    # print two strings side by side?
+Hello
+World
+A177 >>> print(hestr, end=''); print(wostr)   # if 'end' is not specified, it defaults to '\n'
+HelloWorld
+A178 >>> print(hestr, end=' '); print(wostr)
+Hello World
+
+A179 >>> 'Greetings: {} {}, {} {}'.format(hestr, listr, hestr, wostr)
+     'Greetings: Hello Lisbon, Hello World'
+A180 >>> 'Greetings: {0} {1}, {0} {2}'.format(hestr, listr, wostr)
+     'Greetings: Hello Lisbon, Hello World'
+A181 >>> 'Greetings: {0:>10} {1:<10}, {0} {2}'.format(hestr, listr, wostr)
+     'Greetings:      Hello Lisbon    , Hello World'
+A182 >>> 'Greetings: {0:>4} {1:<4}, {0} {2}'.format(hestr, listr, wostr)  # no truncation occurs
+     'Greetings: Hello Lisbon, Hello World'
+
+A183 >>> 'Say {}, {} times'.format(hestr, 7)   # format numbers
+     'Say Hello, 7 times'
+A184 >>> 'Say {}, {:+4d} times'.format(hestr, 7)   # show integer with sign
+     'Say Hello,   +7 times'
+A185 >>> 'Say {}, {:-04d} times'.format(hestr, 7)   # show integer only with negative sign
+     'Say Hello, 0007 times'
+A186 >>> 'Say {}, {:-02d} times'.format(hestr, integ)   # again, no truncation
+     'Say Hello, -234 times'
+A187 >>> '100 / 6 == {}'.format(100/6)          # default formatting for float
+     '100 / 6 == 16.666666666666668'
+A188 >>> '100 / 6 == {:11.5f}'.format(100/6)    # first number is the total length
+     '100 / 6 ==    16.66667'
+A189 >>> '100 / 8 == {:07.3f}'.format(100/8)    # second number is the decimal digits
+     '100 / 8 == 012.500'
