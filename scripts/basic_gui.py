@@ -6,9 +6,6 @@
 import tkinter as tk
 from  tkinter import ttk
 from  tkinter.scrolledtext import ScrolledText
-import time
-
-class Item(object): pass
 
 class CmdlAppGui(object):
     def __init__(self, title, cb_input):
@@ -81,16 +78,14 @@ class CmdlAppGui(object):
 
     def on_press_enter(self, event):
         text = self.entrytext.get()
-        if text in ('x', 'end'):
-            self.finish()
-            return
         self.cb_input(text)
 
-        self.entrytext.set('')
-        self.entry.focus_set() # set the focus on the entry field
-        #self.entry.selection_range(0, tk.END) # mark text in entry field
+        if self.here:
+            self.entrytext.set('')
+            self.entry.focus_set() # set the focus on the entry field
 
     def finish(self):  # program call to terminate GUI
+        self.here = False
         self.entry.unbind("<Return>")
         self.root.destroy()
 
@@ -98,8 +93,8 @@ class CmdlAppGui(object):
 def test():
     def text_input(text):
         # print("received input: '{text}'".format(text=text))
-        appgui.put_msg("> {0}\n".format(text), 0)
-        appgui.put_data("response to '{resp}'\n".format(resp=text), 1)
+        appgui.put_msg("> {0}\n".format(text))
+        appgui.put_data("response to '{resp}'\n".format(resp=text), style=1)
 
     appgui = CmdlAppGui("Title Text", text_input)
     #time.sleep(1)
@@ -111,6 +106,3 @@ if __name__ == '__main__':
     test()
     print("test ended")
 
-    
-              
-    
