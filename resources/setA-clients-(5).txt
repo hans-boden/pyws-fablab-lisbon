@@ -1,0 +1,19 @@
+# Clients for the PYWS Account project
+
+# The names of clients start in column 1
+# The account numbers start in column 4, there may be more than one account per client
+# The account number is followed by an initial value for the account
+
+Madeira, Vicente
+    2757-9384-63     960.34
+    4171-0491-33     545.56
+Santos Ferreiro, Vitória
+    4936-1314-90      13.17
+    3431-1785-63      20.63
+    2881-4411-69     116.71
+Santos, Zezé
+    4519-4887-87       6.46
+Matos Souza, Nuno
+    4006-4442-38     158.40
+Torres Medeiros, Joaninha
+    3360-7743-25     104.08
