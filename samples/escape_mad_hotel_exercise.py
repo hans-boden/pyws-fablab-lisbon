@@ -4,11 +4,13 @@
     find a way (the shortest) from the current position to the exit
 """
 
+# the floor plan should be available in the github resource folder
 floor_file = 'data\\mad_hotel_rooms.txt'
 
 def main():
-    room_plan = get_room_plan()
-    print("Try to escape from the mad hotel")
+    room_plan = get_room_plan()  # a dictionary for rooms
+    
+    print("Try to escape from the Mad Hotel")
     answer = input("In which room are you now? ").strip().lower()
     if not answer in room_plan:
         print("Room '{}' is not known, sorry".format(answer))
@@ -19,14 +21,17 @@ def main():
         print("Sorry, no way out found, you are lost")
         return
 
-    print("follow this way:")
+    print("Follow this way:")
     for color, name in way_out:
-        print("{} door, leads to room: {}".format(color, name))
+        print("   the {} door, leads to room: {}".format(color, name))
 
     print("Congratulations, you reached the Exit")
 
 
 def find_exit(plan, from_room, moreparms=True):
+    # insert the code for a solution here
+    # the arguments of the function may need to be changed
+    
     return []
 
 
