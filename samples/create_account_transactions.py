@@ -92,12 +92,13 @@ def generate_dates(fromdate, todate):
 
 def generate_amounts():
     while True:
-        base = 5 * random.random()
-        probe = (1+base) * (1+base) * (1+base) * (1+base)
-        if probe > 4.99:
-            if probe < 800 and random.random() < 0.9:
-                probe = - probe
-            yield probe
+        base = 1 + 5 * random.random()
+        probe = base*base*base*base
+        if probe < 5.0:
+            continue    # no amounts < 5
+        if probe < 800 and random.random() < 0.9:
+            probe = - probe   # smaller amounts are mostly negative
+        yield probe
 
 def generate_text():
     text_list = []
@@ -115,14 +116,15 @@ def generate_text():
             yield text
 
 def generate_acct_numbers():
-    acct_list = []
     acct_str = "{:04d}-{:04d}-{:02d}"
     R = random.randint
-    diff_acct = 0
-    while len(acct_list) < 100:
-        diff_acct += 1
+    old_acct = set()
+    while True:
         acct_no = acct_str.format(R(1000, 4999), R(1, 9999), R(0,99))
+        if acct_no in old_acct:
+            continue  # avoid duplicates
         yield acct_no
+        old_acct.add(acct_no)
 
 def generate_imbalanced(list):
     imba_list = []
@@ -134,31 +136,28 @@ def generate_imbalanced(list):
         yield random.choice(imba_list)
 
 def generate_firstnames():
-    names = []
-    with open("data\\portuguese_firstnames.txt") as fi:
-        for line in fi:
-            line = line.rstrip()
-            if len(line) < 5  or  line[0] == ' ':
-                continue
-            tup = line.split()
-            if len(tup) < 2 or tup[1] not in ('m', 'f'):
-                continue
-            name, sex = tup[:2]
-            name = name.capitalize()
-            yield name, sex
+    for line in file_reader("data\\portuguese_firstnames.txt"):
+        tup = line.split()
+        if len(tup) < 2 or tup[1] not in ('m', 'f'):
+            continue
+        name, sex = tup[:2]
+        name = name.capitalize()
+        yield name, sex
 
 def generate_surnames():
-    names = []
-    with open("data\\portuguese_surnames.txt") as fi:
+    for line in file_reader("data\\portuguese_surnames.txt"):
+        if line[1] != line[1].upper():
+            continue
+        name = line.split()[0].capitalize()
+        yield name
+                    
+def file_reader(fn):
+    with open(fn, mode='r') as fi:
         for line in fi:
             line = line.rstrip()
             if len(line) < 5  or  line[0] == ' ':
                 continue
-            if line[1] != line[1].upper():
-                continue
-            name = line.split()[0].capitalize()
-            yield name
-
+            yield line            
 
 def generate_raw_names():
     male = []
@@ -258,5 +257,6 @@ def test():
         sum += num
     print("sum of transactions: {:7.2f}".format(sum))
 
-# test()
-main()
+#
+test()
+#main()
