@@ -21,7 +21,6 @@ def main():
 
 
 
-
 class Gui4Drawing():
     def __init__(self, app_title='Gui4Drawing', dim=(800,400)):
         self.title = app_title
@@ -32,7 +31,8 @@ class Gui4Drawing():
         self.quit = self.gui.finish
         self.quit_cmd = 'x'
 
-        self.local_cmds = self.find_cmds()
+        self.local_cmds, self.help = self.find_cmds()
+        self.gui.set_help(self.helper)
 
         self.image = Image.new("RGB", self.imgdim)
         self.pixels = self.image.load()
@@ -44,6 +44,18 @@ class Gui4Drawing():
         self.pen_down = False
         self.color = (200,200,200)
 
+        self.bgcolor = (0, 0, 201)
+        self.bgclear()
+
+    def bgclear(self):
+        xr, yr = self.image.size
+        [self.set_pixel(x, y, self.bgcolor) for x in range(xr) for y in range(yr)]
+
+    def set_pixel(self, x, y, cor):
+        self.pixels[x,y] = cor
+
+    def helper(self):
+        return '\n'.join(sorted(self.help))
 
     def gui_start(self):
         self.show_image()
@@ -54,8 +66,10 @@ class Gui4Drawing():
     def set_zoom(self, zoom_factor):
         if 1 <= zoom_factor <= 8:
             self.zoom_factor = zoom_factor
+            self.visible = self.calc_visible_area(self.image, self.zoom_factor)
+        else:
+            self.put_msg("invalid zoom factor: {}".format(zoom_factor))
 
-        self.calc_visible_area(self.image, self.zoom_factor)
         return self.zoom_factor
 
     def calc_visible_area(self, img, zoomf):
@@ -108,20 +122,27 @@ class Gui4Drawing():
         resized = cropimg.resize((newx, newy))
 
         return resized
+
     def find_cmds(self):
-        names = [x[5:] for x in dir(self) if x.startswith('_cmd_')]
-        return names
+        names = []
+        help = []
+        for methname in dir(self):
+            if not methname.startswith('_cmd_'):
+                 continue
+            name = methname[5:]
+            meth = self.__class__.__dict__[methname]
+            names.append((name, meth))
+            help.append("'{}': {}".format(name, str(meth.__doc__).strip()))
+        return names, help
 
     def exec_method(self, text):
-        for name in self.local_cmds:
+        for name, meth in self.local_cmds:
             if text.startswith(name):
                 break
         else:
             raise ValueError('command not defined')
 
-        meth = self.__class__.__dict__['_cmd_'+name]
         rest = text[len(name):].strip()
-
         return meth(self, rest)
 
 
@@ -129,6 +150,7 @@ class GenericGui():
     def __init__(self, app, app_title, dim):
         self.app = app  # this is the main application object
         self.title = app_title
+        self.help_cb = None
         self.image = None
         self.imgdim = dim
         self.root = tk.Tk()
@@ -149,6 +171,9 @@ class GenericGui():
         self.entry.unbind("<Return>")
         self.root.destroy()
         self.on = False
+
+    def set_help(self, help_cb):
+        self.help_cb = help_cb
 
     def put_msg(self, text, style=0, end='\n'):
         if self.on:
@@ -194,6 +219,21 @@ class GenericGui():
         self.txt_status.insert('end', text)
         self.txt_status.configure(state='disabled')
 
+    def show_help(self):
+        if not self.help_cb:
+            text = "no help available"
+        else:
+            text = self.help_cb()
+        self.put_msg(text)
+
+    def show_about(self):
+        text = """Gui4Drawing
+
+A sandbox application which allows
+to use simple commands to create a
+drawing application."""
+        self.put_msg(text)
+
     def build(self, root, frm):
         frm.grid(column=0, row=0, sticky=("NEWS"))
         frm.columnconfigure(0, weight=2)
@@ -208,6 +248,12 @@ class GenericGui():
 
         filemenu.add_command(label="Exit", command=self.finish)
         menubar.add_cascade(label="File", menu=filemenu)
+
+        helpmenu = tk.Menu(menubar, tearoff=0)
+        helpmenu.add_command(label="Command List", command=self.show_help)
+        helpmenu.add_command(label="About ...", command=self.show_about)
+        menubar.add_cascade(label="Help", menu=helpmenu)
+
         self.root.config(menu=menubar)
 
         cnv_dimx, cnv_dimy = [x+20 for x in self.imgdim]
