@@ -29,3 +29,12 @@ The workshop is scheduled in May and June at the following **\*dates\***:
 +----------+------------+------------+------------+------------+------------+
 
 
+<<<<<<< HEAD
+=======
+some more text
+
+:: _Numbers: http://github.com/hans-boden/pyws-fablab-lisbon/blob/master/readme.rst
+
+
+and then?
+>>>>>>> ed3088a4cf03d9f1443213194f2dd898065aa2e7
