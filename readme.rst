@@ -2,8 +2,6 @@ Python Workshop at the Fablab Lisboa
 ====================================
     *The second workshop in 2016*
 
-The workshop is scheduled in May and June ath the following dates:
-
 The workshop is scheduled in May and June at the following **\*dates\***:
 
 +----------+------------+------------+------------+------------+------------+
@@ -28,13 +26,4 @@ The workshop is scheduled in May and June at the following **\*dates\***:
 |          | **\*27\*** |   . 28 .   |   . 29 .   |   . 30.    |            |
 +----------+------------+------------+------------+------------+------------+
 
-
-<<<<<<< HEAD
-=======
-some more text
-
-:: _Numbers: http://github.com/hans-boden/pyws-fablab-lisbon/blob/master/readme.rst
-
-
-and then?
->>>>>>> ed3088a4cf03d9f1443213194f2dd898065aa2e7
+*end*
