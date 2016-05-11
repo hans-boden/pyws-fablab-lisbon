@@ -1,0 +1,27 @@
+Python Workshop at the Fablab Lisbon 2016Q2
+===========================================
+    *Day One - May,12*
+
+Preparations for the workshop
+=============================
+
+Some annotations
+----------------
+The tutor has no experiences with the Mac platform and only limited experiences with Linux. If you use Mac or Linux, you probably need to get help from friends, colleagues or the internet.
+
+Install Python 
+--------------
+    *if not done before*
+    
+We need Python Version 3 (anython above Python 3.3). Python can be downloaded from the Python_homepage_.
+
+When installing, it should be made sure, that the executable python module is included in the command path. To test this after the installation, open a command terminal and type ``python --version``, to see if the python command is recognized. In not, it should be added manually to the ``PATH`` environment variable.
+
+Github as a communications platform
+-----------------------------------
+``GIT`` is a version control system. ``GIT`` allows to track changes made to software packages. ``GITHUB`` is a web site, which hosts many(!) software packages. The package referring to out Python workshop is hosted at PYWS_2016Q2_.
+
+We can download individual pieces of documentations and code examples, but it is recommended to get a local copy of the PYWS package (called a repository). To make a local copy of a ``GITHUB`` repository, we need to install the ``GIT`` software or to install a ``GIT``-GUI Application. Simply start with ``GIT`` and get an installer from http://git-scm.com/download/win.
+
+
+.. _Python_homepage: http://www.python.org/     
