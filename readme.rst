@@ -27,3 +27,6 @@ The workshop is scheduled in May and June at the following **\*dates\***:
 +----------+------------+------------+------------+------------+------------+
 
 *end*
+
+some more text to provoke a change.
+
