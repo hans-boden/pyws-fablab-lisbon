@@ -26,13 +26,14 @@ class G():
     wsize = [100, 100]  # window size
     dsize = [60, 90, 120, 150, 180, 220, 250]  # disk size (horiz)
     dthick = 20
-
+    speed = 3.0
     solver = None
 try:
     import solver
 except:
-    pass
+    print("import 'solver.py' failed")
 else:
+    print("solver:", solver, solver.solver)
     G.solver = solver.solver
 
 def main():
@@ -132,6 +133,7 @@ class HanoiTower(Widget):
             if command == 'solve':
                 if G.solver:
                     G.solver(G.pq)
+                return
 
             self.txtin_oprop.focus = True
             try:
@@ -215,7 +217,7 @@ class Disk(Widget):
         if self.posgen is None:
             self.oldx = cx
             self.oldy = cy
-            self.posgen = gen_smooth(cx,cy, self.newx, self.newy, speed=20, zoom=0.8)
+            self.posgen = gen_smooth(cx,cy, self.newx, self.newy, speed=G.speed)
             print("move old: {:5.2f}, {:5.2f},  new: {:5.2f}, {:5.2f}"
                   .format(self.oldx, self.oldy, self.newx, self.newy))
 
@@ -248,13 +250,13 @@ def gen_cb(loop=20):
         yield not x
 
 
-def gen_smooth(x1,y1, x2,y2, speed=8, zoom=1.0):
-    # generator: yield a sequence of
+def gen_smooth(x1,y1, x2,y2, speed=1.0):
+    # generator: yield a sequence of positions between two coordinates
     dx = x2-x1
     dy = y2-y1
-    dist = max(abs(dx),abs(dy)) * zoom
+    dist = max(abs(dx),abs(dy)) / speed
 
-    movtab = get_smooth_table(dist, speed=8)
+    movtab = get_smooth_table(dist)
 
     way = 0
     for d in movtab:
@@ -264,13 +266,15 @@ def gen_smooth(x1,y1, x2,y2, speed=8, zoom=1.0):
 
         yield x1 + dx*quot, y1 + dy*quot
 
+    yield x2, y2
 
-def get_smooth_table(dist, speed):
+
+def get_smooth_table(dist, max_step=30):
 
     movtab = []
     revers = []
     way = 0
-    for step in range(1,speed):
+    for step in range(1, max_step):
         if way + step <= dist:
             movtab.append(step)
             way += step
@@ -281,11 +285,11 @@ def get_smooth_table(dist, speed):
         else:
             break
 
-    while way+speed < dist:
-        movtab.append(speed)
-        way += speed
+    while way+max_step < dist:
+        movtab.append(max_step)
+        way += max_step
 
-    for step in range(speed-1 ,0,-1):
+    for step in range(max_step-1 , 0, -1):
         if way + step <= dist:
             ndx = revers.index(step)
             revers[ndx:ndx] = [step]
@@ -328,7 +332,7 @@ kv_code = '''
             size_hint_y: None
             size_hint_x: None
             width: 500
-            text: 'some Text'
+            text: 'command input'
             multiline: False
             on_text_validate: root.get_input(self.text)
             on_focus: root.input_focus(self.focus)
