@@ -9,6 +9,7 @@ def main():
 
 
 class Room():
+    # represent one room of the Mad Hotel
     pass
 
 if __name__ == '__main__':
