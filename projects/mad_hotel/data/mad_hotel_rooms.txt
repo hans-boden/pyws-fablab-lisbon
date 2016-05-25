@@ -1,5 +1,5 @@
 #   Welcome to the MAD HOTEL*****
-
+S
 #   You are in room: Rijadh
 #   The exit is from room: Mumbai
 #   Every room has one or more doors of different colors
