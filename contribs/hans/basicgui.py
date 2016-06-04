@@ -4,19 +4,46 @@
     It tries to provide a nice GUI for simple interactions with a user
     The module is importable and has a simple programming interface
 """
+
 from kivy.config import Config   # change config before importing other stuff
 Config.set('kivy', 'exit_on_escape', 0)  # disable pgm termination with [esc]
 
 from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.clock import Clock
 from kivy.core.text import LabelBase
 from kivy.core.window import Window
 from kivy.lang import Builder
+
+
+class G():
+    root = None
+    title = "Replaceable Title"  
+    cmdhdl = lambda text: print("dummy cmdhdl: {}".format(text))
+    inithdl = lambda text: print("dummy inithdl: {}".format(text))
+    # font files copied manually from the windows font directory
+    kivy_fonts = [{
+            "name": "Monolith",
+            "fn_regular": "data/fonts/monolith.ttf",
+            "fn_bold": "data/fonts/consolab.ttf",
+            "fn_italic": "data/fonts/consolai.ttf",
+            "fn_bolditalic": "data/fonts/consolaz.ttf"
+    }]
+
+
+def start():
+    for font in G.kivy_fonts:
+        LabelBase.register(**font)
+    Window.size = (900, 600)
+    Builder.load_string(kv_text)
+
+    G.app = BasicGuiApp()
+    G.app.run()
+
 
 kv_text = '''
 <BasicGui>:
@@ -91,33 +118,14 @@ kv_text = '''
         on_text_validate: root.get_input(self.text)
 '''
 
-class G():
-    root = None
-    title = "Replaceable Title"  
-    cmdhdl = lambda text: print("dummy cmdhdl: {}".format(text))
-    inithdl = lambda: print("dummy inithdl: {}")
-    put_cons = lambda text: print("dummy putcons: {}".format(text))
-    put_msg = lambda text: print("dummy putmsg: {}".format(text))
-    # font files copied manually from the windows font directory
-    kivy_fonts = [{
-            "name": "Monolith",
-            "fn_regular"   : "data/fonts/monolithr.ttf",
-            "fn_bold"      : "data/fonts/monolithb.ttf",
-            "fn_italic"    : "data/fonts/monolithi.ttf",
-            "fn_bolditalic": "data/fonts/monolithbi.ttf"
-    }]
 
+def terminate(dt=None):
+    if dt is None:  # direct call from gui
+        Clock.schedule_once(terminate, 0.1)  # 0.0==immediately is allowed
+    else:   # call from clock
+        G.app.stop()
 
-def start():
-    for font in G.kivy_fonts:
-        LabelBase.register(**font)
-    Window.size = (900, 600)
-    Builder.load_string(kv_text)
-
-    G.app = ScrollApp()
-    G.app.run()
-
-class ScrollApp(App):
+class BasicGuiApp(App):
     def build(self):
         self.title = "Basic Kivy Gui"  # this is the window title
         self.icon = 'user_ico.png'
@@ -126,12 +134,12 @@ class ScrollApp(App):
         return root
 
     def on_start(self):
-        G.inithdl()
+        G.inithdl("call from on_start")
         G.root.title_text = G.title
 
 class BasicGui(BoxLayout):
-    label1_text = StringProperty('console output')
-    label2_text = StringProperty('message output')
+    label1_text = StringProperty('console output _M_i_M_')
+    label2_text = StringProperty('message output _M_i_M_')
     title_text = StringProperty('')
 
     def __init__(self, **kwargs):
@@ -142,7 +150,7 @@ class BasicGui(BoxLayout):
     def get_input(self, *args):
         newtext = str(args[0])
         if newtext == 'exit':
-            stop()
+            terminate()
             return
         self.ids.txt_input.text = ''
         G.cmdhdl(newtext)
@@ -170,12 +178,6 @@ def put_message(text):
         G.root.label2_text = ''
         return
     G.root.label2_text = G.root.label2_text + text + '\n'
-
-def stop(dt=None):
-    if dt is None:  # direct call from gui
-        Clock.schedule_once(stop, 0.1)  # 0.0==immediately is allowed
-    else:   # call from clock
-        G.app.stop()
 
 if __name__ == "__main__":
     start()

@@ -6,11 +6,11 @@
 
 #   This is the room plan:
 
-Room: Alexandria
-    black door ==> Lisbon
+Room:    Alexandria
+    black door ==> Lisbon  
     red door ==> Sidney
 
-Room: Amsterdam
+Room: Amsterdam  # I like this room!
     red door ==> Los Angeles
     blue door ==> Cape Town
 

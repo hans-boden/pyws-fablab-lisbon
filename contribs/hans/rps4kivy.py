@@ -6,23 +6,28 @@
 
 import random
 
-import basicgui as app
+import basicgui_o as app
 
 class G():
+    putcons = lambda msg: print(msg)
+    putmsg = lambda msg: print(msg)
+
     upoints = 0
     cpoints = 0
     valid = ('r', 'p', 's')
     firstwin = ('rs', 'sp', 'pr')
 
 def main():
-    app.config(dict(title="Rock - Paper - Scissor",
-                    cmdhdl=command_handler,
+    app.config(dict(title="Rock - Paper - Scissor", cmdhdl=command_handler,
                     inithdl=init_handler))
-    app.start()
+    G.putcons = app.get_console_window()
+    G.putmsg  = app.get_message_window()
 
-def init_handler():
-    app.put_console('~clr~')
-    app.put_console('''Welcome to the Rock-Paper-Scissor game
+    app.main()
+
+def init_handler(text):
+    G.putcons('~clr~')
+    G.putcons('''Welcome to the Rock-Paper-Scissor game
 
 You play against me, who first gets 10 points is the winner.
 You enter your bet: 'r', 'p' or 's', I make my own bet.
@@ -32,8 +37,8 @@ So lets start (you can enter 'x' to end the game at any time
 
 Your first bet, please
 ''')
-    app.put_message('~clr~')
-    app.put_message('Status of the game:\n')
+    G.putmsg('~clr~')
+    G.putmsg('Status of the game:\n')
 
     G.state = 'g'
     G.rounds = 10  # maximum 10 rounds
@@ -41,6 +46,9 @@ Your first bet, please
     G.cpoints = 0
 
     write_status()
+
+def term_handler(text):
+    print("term_handler: {}".format(text))
 
 def command_handler(text):
     if text == 'x':
@@ -55,7 +63,7 @@ def command_handler(text):
 
 def handle_game(ubet):
     if not ubet in G.valid:
-        app.put_console("wrong bet: '{}', must be 'r', 'p' or 's'".format(ubet))
+        G.putcons("wrong bet: '{}', must be 'r', 'p' or 's'")
         return
     cbet = random.choice(G.valid)
     if cbet == ubet:
@@ -69,27 +77,27 @@ def handle_game(ubet):
         G.upoints += 1
         write_status()
     msg = "Your bet was '{}', my bet was '{}':  {}"
-    app.put_console(msg.format(ubet, cbet, result))
+    G.putcons(msg.format(ubet, cbet, result))
 
     if G.cpoints >= 10:
-        app.put_message("\nGame over, I have won")
+        G.putmsg("\nGame over, I have won")
         game_end()
         return
     if G.upoints >= 10:
-        app.put_message("\nGame over, You have won")
+        G.putmsg("\nGame over, You have won")
         game_end()
         return
 
 def game_end():
     G.state = 'x'
-    app.put_console("\nDo you want to play again? (y/n)")
+    G.putcons("\nDo you want to play again? (y/n)")
 
 def askagain(answer):
     if answer == 'y':
         init_handler(answer)
         return
     if answer == 'n':
-        app.stop()
+        app.G.app.stop()
         return
     game_end()
 
@@ -97,7 +105,7 @@ def write_status():
     ustr = '>'*G.upoints + '.'*10
     cstr = '.'*10 + '<'*G.cpoints
     game = "you: {}win{} :me".format(ustr[:10], cstr[-10:])
-    app.put_message(game)
+    G.putmsg(game)
 
 if __name__ == '__main__':
     main()

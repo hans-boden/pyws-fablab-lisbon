@@ -98,14 +98,15 @@ def find_exit(plan, room, visited=set(), lvl=0, moreparms=True):
 
 def get_room_plan():
     known_rooms = {}
-    get_room(known_rooms, 'Exit')  # for a soft landing
+    # get_room(known_rooms, 'Exit')  # for a soft landing
 
-    for item, name in get_rooms_and_doors():
+    for item, name in gen_rooms_and_doors():
         if item == 'room':
             room = get_room(known_rooms, name)
             continue
         color = item
-        room.add_door(color, get_room(known_rooms, name))
+        nbr = get_room(known_rooms, name)
+        room.add_door(color, nbr)
     return known_rooms
 
 def get_room(map, name):
@@ -118,8 +119,8 @@ def get_room(map, name):
     return room
     
 
-def get_rooms_and_doors():
-    # return names of rooms and doors
+def gen_rooms_and_doors():
+    # generator: return names of rooms and doors
     with open(floor_file) as fi:
         for line in fi:
             line = line.split('#')[0].strip()
@@ -143,6 +144,7 @@ class Room():
 
     def add_door(self, color, other_room):
         # other_room is a room object
+        assert type(self) == type(other_room), "only a Room object accepted"
         self.doors.append((color, other_room))
 
     def __repr__(self):
