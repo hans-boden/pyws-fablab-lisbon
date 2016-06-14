@@ -11,7 +11,10 @@ class G():
     layers = {}
     colors = "220055 660066 993377 aa8855 ffcc00 ffff00 ccff33 aaff77 ccffaa " \
              "aaffff ffaaff".split()
-    #         220055 660066 aa3355 bb8855 ffcc00 ffff00 ccff33 aaffff
+    #  the following colors represent the colored papers, which we have available
+    #  to make our laser cuts. So if you prepare your real paper work, use these colors
+    #  EB6184 FCD7AE DB465A F76E5A F5B2C7 208AD2 FAF3C2 8BC575  C3E4D3 7EED5D BAE9F2
+
 
 def main():
     myseed = int(random.random() * 100000)
