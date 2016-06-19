@@ -23,7 +23,7 @@ class G():
 
 def main():
     myseed = int(random.random() * 100000)
-    #myseed = 7948
+    myseed = 7948
     random.seed(myseed)
     print("seed: {}".format(myseed))
 
@@ -74,7 +74,7 @@ def calculate_layer(w, h, px, py, lvl):
 
     if min(w, h) < 3.01 * m1 : return
 
-    if random.random() < (0.3 + lvl * 0.1):
+    if random.random() < (0.7 + lvl * 0.1):
         # deeper levels are less likely to be split up
         calculate_layer(w-m2, h-m2, px+m1, py+m1, lvl+1)
         return
