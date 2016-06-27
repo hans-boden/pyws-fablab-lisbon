@@ -2,9 +2,9 @@
 """
     create an "art" object from python, svg, a laser cutter, cardboard and some paint
     Round corners contributed by Hugo
-    This version is developed further, trying to be more understandable
-    and with explanations of code and logic
-    And of course to eliminate a few minor errors
+    This version is developed further, combining the image and cut functions.
+    It tries to be more understandable and with explanations of code and logic.
+    And of course eliminates a few (not so) minor errors
 """
 
 import random
@@ -41,7 +41,7 @@ class G():
 
 def main():
     myseed = int(random.random() * 100000)
-    # myseed = 93318  # freeze the random generator
+    myseed = 40478  # freeze the random generator
     random.seed(myseed)  # the 'myseed' value appears in the file names
 
     calculate_layers(G.w, G.h, G.px, G.py, lvl=0)
@@ -49,7 +49,7 @@ def main():
     arrange_layers()  # change sequence of layers
     
     output_image(myseed)  # output as html file
-    # output_cutlayers(myseed)  # output as a series of svg files
+    output_cutlayers(myseed)  # output as a series of svg files
 
 def arrange_layers():
     # we must draw the layers in a different order from which they were calculated
